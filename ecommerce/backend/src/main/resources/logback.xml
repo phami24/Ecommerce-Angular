@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_DIR" value="/var/log" />
+
+    <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/myapp.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/myapp-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %-5level %logger{36} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger cho ứng dụng của bạn -->
+    <logger name="phamiz.ecommerce.backend" level="INFO" additivity="false">
+        <appender-ref ref="ROLLING"/>
+    </logger>
+
+    <root level="OFF">
+        <appender-ref ref="ROLLING" />
+    </root>
+</configuration>
