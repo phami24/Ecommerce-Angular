@@ -17,14 +17,17 @@ import phamiz.ecommerce.backend.config.JwtProvider;
 import phamiz.ecommerce.backend.dto.Auth.AuthResponse;
 import phamiz.ecommerce.backend.dto.Auth.LoginRequest;
 import phamiz.ecommerce.backend.exception.UserException;
+import phamiz.ecommerce.backend.model.Cart;
 import phamiz.ecommerce.backend.model.User;
-import phamiz.ecommerce.backend.repository.UserRepository;
+import phamiz.ecommerce.backend.repositories.UserRepository;
+import phamiz.ecommerce.backend.service.ICartService;
 import phamiz.ecommerce.backend.service.serviceImpl.CustomUserServiceImpl;
 
 import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 /**
  * Controller class for handling authentication-related endpoints such as signup and signin.
  */
@@ -37,7 +40,7 @@ public class AuthController {
     private final JwtProvider jwtProvider;
     private final PasswordEncoder passwordEncoder;
     private final CustomUserServiceImpl customUserService;
-
+    private final ICartService cartService;
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     /**
@@ -57,6 +60,7 @@ public class AuthController {
         User isEmailExist = userRepository.findByEmail(email);
 
         if (isEmailExist != null) {
+            logger.info(String.format("Email is already exists with another account"));
             throw new UserException("Email is already exists with another account");
         }
 
@@ -68,6 +72,9 @@ public class AuthController {
         createdUser.setCreatedAt(LocalDateTime.now());
 
         User savedUser = userRepository.save(createdUser);
+        Cart newCart = new Cart();
+        cartService.createCart(savedUser);
+        logger.info("Create Cart success : ", newCart);
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(savedUser.getEmail(), savedUser.getPassword());
 
@@ -76,7 +83,7 @@ public class AuthController {
         String token = jwtProvider.generateToken(authentication);
 
         AuthResponse authResponse = new AuthResponse();
-        authResponse.setJwt(token);
+        authResponse.setToken(token);
         authResponse.setMessage("Signup Success!");
 
         // Log message with current time using DateTimeUtils
@@ -95,14 +102,14 @@ public class AuthController {
     public ResponseEntity<AuthResponse> loginUserHandler(@RequestBody LoginRequest loginRequest) {
         String username = loginRequest.getEmail();
         String password = loginRequest.getPassword();
-
+        logger.info("Caller");
         Authentication authentication = authenticate(username, password);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = jwtProvider.generateToken(authentication);
 
         AuthResponse authResponse = new AuthResponse();
-        authResponse.setJwt(token);
+        authResponse.setToken(token);
         authResponse.setMessage("Signin Success!");
 
         // Log message with current time using DateTimeUtils

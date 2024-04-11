@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import phamiz.ecommerce.backend.config.JwtProvider;
 import phamiz.ecommerce.backend.exception.UserException;
 import phamiz.ecommerce.backend.model.User;
-import phamiz.ecommerce.backend.repository.UserRepository;
+import phamiz.ecommerce.backend.repositories.UserRepository;
 import phamiz.ecommerce.backend.service.IUserService;
 
 import java.util.Optional;

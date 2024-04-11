@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import phamiz.ecommerce.backend.model.User;
-import phamiz.ecommerce.backend.repository.UserRepository;
+import phamiz.ecommerce.backend.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

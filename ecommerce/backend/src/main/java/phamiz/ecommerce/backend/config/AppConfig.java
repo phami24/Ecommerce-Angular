@@ -1,6 +1,7 @@
 package phamiz.ecommerce.backend.config;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,7 +34,7 @@ public class AppConfig {
                     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                         CorsConfiguration corsConfiguration = new CorsConfiguration();
                         corsConfiguration.setAllowedOrigins(Arrays.asList(
-                                "http://localhost:3000"));
+                                "http://localhost:4200", "http://localhost:8080"));
 
                         // allowed any method HTTP: GET POST PUT DELETE .
                         corsConfiguration.setAllowedMethods(Collections.singletonList("*"));
@@ -65,5 +66,10 @@ public class AppConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public ModelMapper modelMapperBean() {
+        return new ModelMapper();
     }
 }

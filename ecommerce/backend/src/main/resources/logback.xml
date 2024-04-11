@@ -2,6 +2,18 @@
 <configuration>
     <property name="LOG_DIR" value="/var/log" />
 
+    <!-- Appender cho Hibernate -->
+    <appender name="HIBERNATE_ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/hibernate.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/hibernate-%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %-5level %logger{36} : %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Appender cho ứng dụng của bạn -->
     <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/myapp.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
@@ -11,6 +23,11 @@
             <pattern>%date{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %-5level %logger{36} : %msg%n</pattern>
         </encoder>
     </appender>
+
+    <!-- Logger cho Hibernate -->
+    <logger name="org.hibernate" level="INFO" additivity="false">
+        <appender-ref ref="HIBERNATE_ROLLING"/>
+    </logger>
 
     <!-- Logger cho ứng dụng của bạn -->
     <logger name="phamiz.ecommerce.backend" level="INFO" additivity="false">
