@@ -1,0 +1,38 @@
+<header class="bg-[#1c1d26] p-5">
+  <nav class="flex justify-between items-center w-[92%] mx-auto">
+    <div class="w-16 cursor-pointer text-white text-lg">
+      Logo
+    </div>
+    <div [ngClass]="{'top-[9%]': isMenuOpen, 'top-[-100%]': !isMenuOpen}" class="nav-links duration-500 md:static absolute bg-[#1c1d26] md:min-h-fit min-h-[60vh] left-0 md:w-auto w-full flex items-center px-5">
+      <ul class="text-white flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+        <li>
+          <a class="hover:text-gray-500" href="#">Products</a>
+        </li>
+        <li>
+          <a class="hover:text-gray-500" href="#">Resource</a>
+        </li>
+        <li>
+          <a class="hover:text-gray-500" href="#">Developers</a>
+        </li>
+        <li>
+          <a class="hover:text-gray-500" href="#">Pricing</a>
+        </li>
+      </ul>
+    </div>
+    <div class="flex items-center gap-6">
+      <div *ngIf="!isLoggedIn">
+        <a href="/auth/login">
+          <button class="bg-[#656986] text-black px-5 py-2 rounded-full hover:bg-[#76ABAE] hover:text-white">
+            Sign in
+          </button>
+        </a>
+      </div>
+      <div *ngIf="isLoggedIn" >
+          <button (click)="logout()" class="bg-[#656986] text-black px-5 py-2 rounded-full hover:bg-[#76ABAE] hover:text-white">
+            Logout
+          </button>
+      </div>
+      <button class="material-icons text-white" (click)="toggleMenu()" *ngIf="!isLargeScreen">  {{ isMenuOpen ? 'close' : 'menu' }}</button> <!-- Material Icon for Menu -->
+    </div>
+  </nav>
+</header>
