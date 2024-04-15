@@ -1,0 +1,8 @@
+<div class="px-5 lg:px-20 lg:py-10">
+  <h2 class="text-2xl text-center font-bold text-gray-900">{{title}}</h2>
+  <div class="flex flex-wrap justify-center grid-cols-4 gap-4">
+    <ng-container *ngFor="let product of products">
+      <app-product-card [product]="product" />
+    </ng-container>
+  </div>
+</div>

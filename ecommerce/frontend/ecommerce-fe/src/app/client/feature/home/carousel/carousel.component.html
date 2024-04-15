@@ -1,0 +1,15 @@
+<div class="relative">
+  <div class="overflow-x-hidden">
+      <div class="flex transition-transform duration-500" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
+          <ng-container *ngFor="let item of carouselData">
+              <div class="flex-none w-full relative">
+                  <img [src]="item.image" alt="carousel image" class="w-full">
+                  <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-30"></div> 
+                  <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white text-center text-6xl font-bold">
+                      {{ item.text }}
+                  </div>
+              </div>
+          </ng-container>
+      </div>
+  </div>
+</div>

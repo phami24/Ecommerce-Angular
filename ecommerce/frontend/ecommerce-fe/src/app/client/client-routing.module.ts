@@ -4,6 +4,9 @@ import { HomeComponent } from './feature/home/home.component';
 import { AboutComponent } from './feature/about/about.component';
 import { PostComponent } from './feature/post/post.component';
 import { ProductsComponent } from './feature/products/products.component';
+import { ErrorComponent } from './feature/error/error.component';
+import { CartComponent } from './feature/cart/cart.component';
+import { ContactComponent } from './feature/contact/contact.component';
 const routes: Routes = [{
   path: 'store',
   children: [
@@ -18,13 +21,28 @@ const routes: Routes = [{
       pathMatch: 'full'
     },
     {
-      path: 'post',
+      path: 'posts',
       component: PostComponent,
       pathMatch: 'full'
     },
     {
       path: 'products',
       component: ProductsComponent,
+      pathMatch: 'full'
+    },
+    {
+      path: 'cart',
+      component: CartComponent,
+      pathMatch: 'full'
+    },
+    {
+      path: 'contact',
+      component: ContactComponent,
+      pathMatch: 'full'
+    },
+    {
+      path: 'error',
+      component: ErrorComponent,
       pathMatch: 'full'
     }
   ]

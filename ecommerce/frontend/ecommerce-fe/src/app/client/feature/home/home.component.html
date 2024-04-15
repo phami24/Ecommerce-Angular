@@ -1,1 +1,63 @@
-<p>home works!</p>
+<div class="bg-gray-100">
+  <div>
+    <app-home-carousel />
+  </div>
+  <div class="mt-5">
+    <app-home-service />
+  </div>
+
+  <div>
+    <app-home-brand />
+  </div>
+  <div>
+    <!-- 6 Sản phẩm nổi bật -->
+    <app-product-slider title="Feature Product" [products]="menJackets" />
+  </div>
+
+  <div>
+    <div class="flex flex-wrap justify-center gap-4">
+      <img
+        src="https://techspace.vn/wp-content/uploads/2022/09/ma-giam-100.jpg"
+        alt=""
+      />
+      <img
+        src="https://techspace.vn/wp-content/uploads/2022/09/trao-doi-gaming-gear.jpg"
+        alt=""
+      />
+    </div>
+  </div>
+
+  <div>
+    <!--6 New product -->
+    <app-product-slider title="New Product" [products]="menJackets" />
+  </div>
+  <!-- 
+  <div class="pb-20">
+    <app-categories />
+  </div> -->
+
+  <div class="grid sm:grid-cols-1 sm:gap-1 lg:grid-cols-3 pb-20">
+    <div class="flex justify-center "> <!-- Sử dụng flex ở đây để căn giữa ảnh trong mỗi cột -->
+      <img
+        src="https://techspace.vn/wp-content/uploads/2022/09/chinh-sach-bao-hanh.jpg"
+        alt="Chính sách bảo hành"
+        class="w-3/4 h-auto" 
+      />
+    </div>
+    <div class="flex justify-center ">
+      <img
+        src="https://techspace.vn/wp-content/uploads/2022/09/chinh-sach-van-chuyen.jpg"
+        alt="Chính sách vận chuyển"
+        class="w-3/4 h-auto"
+      />
+    </div>
+    <div class="flex justify-center ">
+      <img
+        src="https://techspace.vn/wp-content/uploads/2022/09/chinh-sach-doi-tra.jpg"
+        alt="Chính sách đổi trả"
+        class="w-3/4 h-auto"
+      />
+    </div>
+  </div>  
+  
+</div>

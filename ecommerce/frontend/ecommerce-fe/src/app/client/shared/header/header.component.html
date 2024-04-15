@@ -1,38 +1,95 @@
-<header class="bg-[#1c1d26] p-5">
-  <nav class="flex justify-between items-center w-[92%] mx-auto">
-    <div class="w-16 cursor-pointer text-white text-lg">
-      Logo
+<header class="">
+  <div class="mx-auto m-3 grid grid-cols-6 items-center">
+    <!-- Logo -->
+    <div class="col-span-2 cursor-pointer text-center text-black text-lg pl-4">
+      <a href="/store/home">
+        <span class="self-center text-2xl font-semibold whitespace-nowrap"
+          >GearShop</span
+        >
+      </a>
     </div>
-    <div [ngClass]="{'top-[9%]': isMenuOpen, 'top-[-100%]': !isMenuOpen}" class="nav-links duration-500 md:static absolute bg-[#1c1d26] md:min-h-fit min-h-[60vh] left-0 md:w-auto w-full flex items-center px-5">
-      <ul class="text-white flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8">
+
+    <!-- Search bar -->
+    <div
+      class="col-span-2 relative flex items-center h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden ml-3"
+    >
+      <div class="grid place-items-center h-full w-12 text-gray-300">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
+        </svg>
+      </div>
+
+      <input
+        class="peer h-full w-full outline-none text-sm text-gray-700"
+        type="text"
+        id="search"
+        placeholder="Search something.."
+      />
+    </div>
+
+    <!-- Authentication buttons -->
+    <div class="col-span-2 flex justify-center items-center space-x-4">
+      <div *ngIf="!isLoggedIn">
+        <a href="/auth/login">
+          <button class="text-black text-lg">Đăng nhập</button>
+        </a>
+      </div>
+      <div *ngIf="isLoggedIn" class="flex">
+        <button (click)="logout()" class="text-black text-lg mr-4">
+          Logout
+        </button>
+        <button class="text-black text-lg pt-2">
+          <i class="material-icons">shopping_cart</i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- router -->
+  <nav class="flex justify-center items-center mx-auto bg-[#1c1d26] p-5">
+    <div
+      [ngClass]="{ 'top-[18%]': isMenuOpen, 'top-[-100%]': !isMenuOpen }"
+      class="z-10 nav-links duration-500 md:static absolute bg-[#1c1d26] md:min-h-fit min-h-[60vh] left-0 md:w-auto w-full flex items-center px-5"
+    >
+      <ul
+        class="text-white flex md:flex-row flex-col md:items-center md:gap-[4vw] gap-8"
+      >
         <li>
-          <a class="hover:text-gray-500" href="#">Products</a>
+          <a class="hover:text-gray-500" href="/store/home">Home</a>
         </li>
         <li>
-          <a class="hover:text-gray-500" href="#">Resource</a>
+          <a class="hover:text-gray-500" href="/store/products">Sản phẩm</a>
         </li>
         <li>
-          <a class="hover:text-gray-500" href="#">Developers</a>
+          <a class="hover:text-gray-500" href="/store/posts">Tin tức</a>
         </li>
         <li>
-          <a class="hover:text-gray-500" href="#">Pricing</a>
+          <a class="hover:text-gray-500" href="/store/about">About Us</a>
+        </li>
+        <li>
+          <a class="hover:text-gray-500" href="/store/contact">Liên hệ</a>
         </li>
       </ul>
     </div>
     <div class="flex items-center gap-6">
-      <div *ngIf="!isLoggedIn">
-        <a href="/auth/login">
-          <button class="bg-[#656986] text-black px-5 py-2 rounded-full hover:bg-[#76ABAE] hover:text-white">
-            Sign in
-          </button>
-        </a>
-      </div>
-      <div *ngIf="isLoggedIn" >
-          <button (click)="logout()" class="bg-[#656986] text-black px-5 py-2 rounded-full hover:bg-[#76ABAE] hover:text-white">
-            Logout
-          </button>
-      </div>
-      <button class="material-icons text-white" (click)="toggleMenu()" *ngIf="!isLargeScreen">  {{ isMenuOpen ? 'close' : 'menu' }}</button> <!-- Material Icon for Menu -->
+      <button
+        class="material-icons text-white"
+        (click)="toggleMenu()"
+        *ngIf="!isLargeScreen"
+      >
+        {{ isMenuOpen ? "close" : "menu" }}
+      </button>
     </div>
   </nav>
 </header>
