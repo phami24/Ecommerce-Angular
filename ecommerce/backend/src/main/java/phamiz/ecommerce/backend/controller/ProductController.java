@@ -30,25 +30,29 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) throws ProductException {
+    public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) throws ProductException {
         Product product = productService.findProductById(id);
         if (product == null) {
             logger.error("Can not found product!");
         }
         logger.info("Product found with id : " + id);
-        return ResponseEntity.ok(product);
+        ProductDTO productDTO = productService.toDTO(product);
+        return ResponseEntity.ok(productDTO);
     }
 
-    @GetMapping("/product/filter")
-    public ResponseEntity<Page<Product>> findProductByCategoryHandler(
-            @RequestParam String category, @RequestParam List<String> color,
-            @RequestParam List<String> size, @RequestParam Integer minPrice,
-            @RequestParam Integer maxPrice, @RequestParam String sort,
-            @RequestParam String stock, @RequestParam Integer pageNumber,
-            @RequestParam Integer pageSize) {
-        Page<Product> response = productService.getAllProduct(
-                category, color, size, minPrice, maxPrice,
-                sort, stock, pageNumber, pageSize);
+    @GetMapping("/filter")
+    public ResponseEntity<Page<ProductDTO>> findProductByFilter(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) List<String> color,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            @RequestParam(required = false) String sort,
+            @RequestParam Integer pageNumber,
+            @RequestParam Integer pageSize) throws ProductException {
+        Page<ProductDTO> response = productService.getAllProduct(
+                category, color, minPrice, maxPrice,
+                sort, pageNumber, pageSize);
+        System.out.println(response);
         logger.info("Filter products success !");
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }

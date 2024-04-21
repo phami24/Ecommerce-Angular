@@ -1,3 +1,4 @@
+import { FormsModule,FormBuilder,ReactiveFormsModule  } from '@angular/forms';
 import { NgModule , CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -20,9 +21,19 @@ import { OrderDetailComponent } from './feature/order-detail/order-detail.compon
 import { ProductSliderComponent } from './feature/home/product-slider/product-slider.component';
 import { ServiceComponent } from './feature/home/service/service.component';
 import { BrandComponent } from './feature/home/brand/brand.component';
-import { ContactComponent } from './feature/contact/contact.component';
-
-
+import {MatSelectModule} from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { ProductReviewRatingComponent } from './feature/product-detail/product-review-rating/product-review-rating.component';
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
@@ -44,11 +55,25 @@ import { ContactComponent } from './feature/contact/contact.component';
     ProductSliderComponent,
     ServiceComponent,
     BrandComponent,
-    ContactComponent
+    ProductReviewRatingComponent,
   ],
   imports: [
     CommonModule,
-    ClientRoutingModule
+    ClientRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    MatMenuModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatRadioModule,
+    MatProgressBarModule,
+    MatSliderModule,
+    MatChipsModule,
+    MatPaginatorModule
   ],
   exports: [HeaderComponent, FooterComponent]
 })

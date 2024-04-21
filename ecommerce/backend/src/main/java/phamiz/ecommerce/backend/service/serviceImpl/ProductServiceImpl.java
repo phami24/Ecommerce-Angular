@@ -33,6 +33,7 @@ public class ProductServiceImpl implements IProductService {
     private final ICategoryRepository categoryRepository;
     private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
+    @Override
     public ProductDTO toDTO(Product product) {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setId(product.getId());
@@ -149,32 +150,71 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public Page<Product> getAllProduct(String category, List<String> colors, List<String> sizes,
+    public Page<ProductDTO> getAllProduct(String category, List<String> colors,
                                        Integer minPrice, Integer maxPrice,
-                                       String sort, String stock, Integer pageNumber, Integer pageSize) {
+                                       String sort, Integer pageNumber, Integer pageSize) throws ProductException {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-
         List<Product> products = productRepository.filterProducts(category, minPrice, maxPrice, sort);
-
+        if (products.isEmpty()) {
+            logger.error("Can not found any product");
+            throw new ProductException("Can not found any product");
+        }
+        List<Product> listFilterProduct = new ArrayList<>();
         if (!colors.isEmpty()) {
-            products = products.stream().filter(p -> colors.stream().anyMatch(c ->
-                    c.equalsIgnoreCase(p.getProductColors().toString()))).collect(Collectors.toList());
-        }
-
-        if (stock != null) {
-            if (stock.equals("in_stock")) {
-                products = products.stream().filter(p -> p.getQuantity() > 0).collect(Collectors.toList());
-            } else if (stock.equals("out_of_stock")) {
-                products = products.stream().filter(p -> p.getQuantity() < 1).collect(Collectors.toList());
+            for (Product product : products) {
+                for (ProductColor color : product.getProductColors()) {
+                    if (colors.contains(color.getColor_name().toString())) {
+                        listFilterProduct.add(product);
+                        break;
+                    }
+                }
             }
+        } else {
+            listFilterProduct.addAll(products);
         }
+        if (pageNumber < 0 || pageSize <= 0) {
+            throw new IllegalArgumentException("Invalid pageNumber or pageSize");
+        }
+        List<ProductDTO> listProductRespone = new ArrayList<>();
+        for (Product product : listFilterProduct) {
+            System.out.println(product.getProduct_name());
+            listProductRespone.add(toDTO(product));
+        }
+        int startIndex = pageable.getPageNumber() * pageable.getPageSize();
+        int endIndex = startIndex + pageable.getPageSize();
+        endIndex = Math.min(endIndex, listProductRespone.size());
+        List<ProductDTO> pageContent = listProductRespone.subList(startIndex, endIndex);
+        Page<ProductDTO> pageResult  = new PageImpl<>(pageContent, pageable, listProductRespone.size());
+        return pageResult ;
+    }
 
-        int startIndex = (int) pageable.getOffset();
-        int endIndex = Math.min(startIndex + pageable.getPageSize(), products.size());
+    @Override
+    public List<ProductDTO> getNewProduct() {
+        List<Product> products = productRepository.findTop6ByOrderByCreatedAtDesc();
+        if (products.isEmpty()) {
+            logger.warn("No product was found!");
+        }
+        logger.info("Find success");
+        List<ProductDTO> listProductRespone = new ArrayList<>();
+        for (Product product : products) {
 
-        List<Product> pageContent = products.subList(startIndex, endIndex);
-        Page<Product> filteredProducts = new PageImpl<>(pageContent, pageable, products.size());
+            listProductRespone.add(toDTO(product));
+        }
+        return listProductRespone;
+    }
 
-        return filteredProducts;
+    @Override
+    public List<ProductDTO> getRandomProduct() {
+        List<Product> products = productRepository.findRandom6Products();
+        if (products.isEmpty()) {
+            logger.warn("No product was found!");
+        }
+        logger.info("Find success");
+        List<ProductDTO> listProductRespone = new ArrayList<>();
+        for (Product product : products) {
+
+            listProductRespone.add(toDTO(product));
+        }
+        return listProductRespone;
     }
 }

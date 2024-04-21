@@ -12,7 +12,11 @@ export class ProductCardComponent {
   constructor(private router: Router) {
 
   }
-  navigate(id: any) {
-    this.router.navigate([`/product-details/${this.product.id}`])
+  navigate() {
+    this.router.navigate([`store/product-details/${this.product.id}`])
+  }
+
+  getStars(num: number): any[] {
+    return new Array(num);
   }
 }

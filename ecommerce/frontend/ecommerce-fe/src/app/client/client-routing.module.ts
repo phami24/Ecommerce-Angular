@@ -7,6 +7,7 @@ import { ProductsComponent } from './feature/products/products.component';
 import { ErrorComponent } from './feature/error/error.component';
 import { CartComponent } from './feature/cart/cart.component';
 import { ContactComponent } from './feature/contact/contact.component';
+import { ProductDetailComponent } from './feature/product-detail/product-detail.component';
 const routes: Routes = [{
   path: 'store',
   children: [
@@ -44,6 +45,10 @@ const routes: Routes = [{
       path: 'error',
       component: ErrorComponent,
       pathMatch: 'full'
+    },
+    {
+      path:'product-details/:id',
+      component :ProductDetailComponent,
     }
   ]
 }];

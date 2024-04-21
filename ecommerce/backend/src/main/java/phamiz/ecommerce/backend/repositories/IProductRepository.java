@@ -11,9 +11,8 @@ import java.util.List;
 @Repository
 public interface IProductRepository extends JpaRepository<Product, Long> {
     @Query("SELECT p FROM Product p " +
-            "WHERE (p.category.category_name = :category OR :category='')" +
-            "AND ((:minPrice IS NULL AND :maxPrice IS NULL) " +
-            "OR (p.price BETWEEN :minPrice AND :maxPrice))" +
+            "WHERE (:category IS NULL OR :category = '' OR p.category.category_name = :category) " +
+            "AND ((:minPrice IS NULL AND :maxPrice IS NULL) OR (p.price BETWEEN :minPrice AND :maxPrice)) " +
             "ORDER BY " +
             "CASE WHEN :sort = 'price_low' THEN p.price END ASC, " +
             "CASE WHEN :sort = 'price_high' THEN p.price END DESC")
@@ -21,4 +20,11 @@ public interface IProductRepository extends JpaRepository<Product, Long> {
                                         @Param("minPrice") Integer minPrice,
                                         @Param("maxPrice") Integer maxPrice,
                                         @Param("sort") String sort);
+
+    // New method to get 6 latest products
+    List<Product> findTop6ByOrderByCreatedAtDesc();
+
+    // New method to get 6 random products
+    @Query(value = "SELECT * FROM product ORDER BY RAND() LIMIT 6", nativeQuery = true)
+    List<Product> findRandom6Products();
 }

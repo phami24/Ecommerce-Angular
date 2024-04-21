@@ -9,12 +9,15 @@ import phamiz.ecommerce.backend.model.Product;
 import java.util.List;
 
 public interface IProductService {
+    ProductDTO toDTO(Product product);
     public List<ProductDTO> findAllProduct();
     public Product createProduct(CreateProductRequest request);
     public String deleteProduct(Long productId) throws ProductException;
     public Product updateProduct(Long productId, Product req) throws  ProductException;
     public Product findProductById(Long id) throws ProductException;
-    public Page<Product> getAllProduct(String category, List<String> colors, List<String> sizes,
+    public Page<ProductDTO> getAllProduct(String category, List<String> colors,
                                        Integer minPrice, Integer maxPrice, String sort,
-                                       String stock, Integer pageNumber, Integer pageSize);
+                                       Integer pageNumber, Integer pageSize) throws ProductException;
+    public List<ProductDTO> getNewProduct();
+    List<ProductDTO> getRandomProduct();
 }

@@ -9,6 +9,7 @@ import { ClientModule } from './client/client.module';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { authReducer } from './store/Auth/auth.reducer';
+import { productReducer } from './store/Product/product.reducer';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -24,6 +25,7 @@ import { authReducer } from './store/Auth/auth.reducer';
     StoreModule.forRoot(
       {
         auth: authReducer,
+        product:productReducer
       },
       {}
     ),
