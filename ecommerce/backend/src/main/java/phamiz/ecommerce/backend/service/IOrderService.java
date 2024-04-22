@@ -1,5 +1,6 @@
 package phamiz.ecommerce.backend.service;
 
+import phamiz.ecommerce.backend.exception.CartItemException;
 import phamiz.ecommerce.backend.exception.OrderException;
 import phamiz.ecommerce.backend.model.Address;
 import phamiz.ecommerce.backend.model.Order;
@@ -8,7 +9,7 @@ import phamiz.ecommerce.backend.model.User;
 import java.util.List;
 
 public interface IOrderService {
-    public Order createOrder(User user, Address shippingAddress);
+    public Order createOrder(User user, Address shippingAddress) throws CartItemException;
 
     public Order findOrderById(Long orderId) throws OrderException;
 

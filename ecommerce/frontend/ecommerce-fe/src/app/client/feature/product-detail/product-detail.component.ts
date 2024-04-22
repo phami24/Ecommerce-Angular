@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { AppState } from 'src/app/Model/AppState';
+import { CartService } from 'src/app/store/Cart/cart.service';
 import { ProductService } from 'src/app/store/Product/product.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class ProductDetailComponent {
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
     private store: Store<AppState>,
+    private cartService:CartService
   ) { }
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -27,5 +29,11 @@ export class ProductDetailComponent {
   }
   getStars(num: number): any[] {
     return new Array(num);
+  }
+
+  handleAddToCart(id : number) {
+    const data = { productId: id };
+    this.cartService.addItemToCart(data);
+    this.cartService.getCart();
   }
 }

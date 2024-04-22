@@ -3,6 +3,7 @@ package phamiz.ecommerce.backend.service.serviceImpl;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import phamiz.ecommerce.backend.exception.CartItemException;
 import phamiz.ecommerce.backend.exception.OrderException;
 import phamiz.ecommerce.backend.model.*;
 import phamiz.ecommerce.backend.repositories.IAddressRepository;
@@ -29,7 +30,7 @@ public class OrderService implements IOrderService {
     private final IAddressRepository addressRepository;
 
     @Override
-    public Order createOrder(User user, Address shippingAddress) {
+    public Order createOrder(User user, Address shippingAddress) throws CartItemException {
         shippingAddress.setUser(user);
         Address address = addressRepository.save(shippingAddress);
         user.getAddresses().add(address);

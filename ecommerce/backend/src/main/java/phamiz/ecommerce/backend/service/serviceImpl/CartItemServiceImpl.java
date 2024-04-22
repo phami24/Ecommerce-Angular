@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import phamiz.ecommerce.backend.dto.Cart.CartItemDTO;
 import phamiz.ecommerce.backend.exception.CartItemException;
 import phamiz.ecommerce.backend.exception.UserException;
 import phamiz.ecommerce.backend.model.Cart;
@@ -16,7 +17,10 @@ import phamiz.ecommerce.backend.repositories.ICartRepository;
 import phamiz.ecommerce.backend.service.ICartItemService;
 import phamiz.ecommerce.backend.service.IUserService;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -39,7 +43,7 @@ public class CartItemServiceImpl implements ICartItemService {
     @Override
     public CartItem updateCartItem(Long userId, Long id, int quantity) throws CartItemException, UserException {
         CartItem cartItem = findCartItemById(id);
-        if(cartItem == null ){
+        if (cartItem == null) {
             logger.error("Cart Item is null");
         }
         cartItem.setQuantity(quantity);
@@ -50,8 +54,8 @@ public class CartItemServiceImpl implements ICartItemService {
     @Override
     public CartItem isCartItemExist(Cart cart, Product product) {
         CartItem cartItem = cartItemRepository.isCartItemExist(cart, product);
-        if(cartItem == null ){
-             logger.error("Cart Item is null");
+        if (cartItem == null) {
+            logger.error("Cart Item is null");
         }
         return cartItem;
     }
@@ -71,5 +75,30 @@ public class CartItemServiceImpl implements ICartItemService {
         }
         logger.error("Cart item not found with id" + cartItemId);
         throw new CartItemException("Cart item not found with id" + cartItemId);
+    }
+
+    @Override
+    public Set<CartItem> findCartItemByCartId(Long cartId) throws CartItemException {
+        Set<CartItem> cartItems = cartItemRepository.findByCartId(cartId);
+        if (!cartItems.isEmpty()) {
+            logger.info("Cart Items was found",cartItems);
+            return cartItems;
+        }
+        logger.error("Cart item not found with id" + cartId);
+        return null;
+    }
+
+    @Override
+    public CartItemDTO toDTO(CartItem cartItem) {
+        CartItemDTO cartItemDTO = new CartItemDTO();
+        cartItemDTO.setId(cartItem.getId());
+        cartItemDTO.setCartId(cartItem.getCart().getId());
+        cartItemDTO.setProductId(cartItem.getProduct().getId());
+        cartItemDTO.setQuantity(cartItem.getQuantity());
+        cartItemDTO.setPrice(cartItem.getPrice());
+        cartItemDTO.setProductName(cartItem.getProduct().getProduct_name());
+        cartItemDTO.setProductImageUrl(cartItem.getProduct().getImages().stream()
+                .map((productImage -> productImage.getImageUrl().toString())).collect(Collectors.toList()));
+        return cartItemDTO;
     }
 }

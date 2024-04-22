@@ -45,13 +45,60 @@
           <button class="text-black text-lg">Đăng nhập</button>
         </a>
       </div>
-      <div *ngIf="isLoggedIn" class="flex">
+      <div *ngIf="isLoggedIn" class="flex relative">
         <button (click)="logout()" class="text-black text-lg mr-4">
           Logout
         </button>
-        <button class="text-black text-lg pt-2 ml-2">
-          <i class="material-icons">shopping_cart</i>
-        </button>
+        <a href="/store/cart" class="text-gray-400 text-lg pt-2 ml-2 flex">
+          <!-- (click)="showModal = !showModal" -->
+          <button>
+            <mat-icon matBadge="{{ cartItemsCount }}" matBadgeColor="warn"
+              >shopping_cart</mat-icon
+            >
+          </button>
+
+          <!-- <div
+            *ngIf="showModal"
+            class="fixed top-20 right-10  bg-white rounded-lg flex z-50"
+          >
+   
+            <div class=" bg-white p-2 pb-4  text-center rounded-lg shadow-lg right-0">          
+              <button (click)="showModal = !showModal" type="button" class="text-gray-400 hover:text-gray-500">
+                <span class="inset-0.5"></span>
+                <span class="sr-only">Close panel</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <ul role="list" class="p-2 divide-y divide-gray-200">
+                <li class="flex py-6 pr-4">
+                  <div class="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                    <img src="https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg" alt="Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt." class="h-full w-full object-cover object-center">
+                  </div>
+
+                  <div class="ml-4 flex flex-1 flex-col">
+                    <div>
+                      <div class="flex justify-between text-base font-medium text-gray-900">
+                        <h3>
+                          <a href="#">Throwback Hip Bag</a>
+                        </h3>
+                        <p class="ml-4">$90.00</p>
+                      </div>
+                    </div>
+                    <div class="flex flex-1 items-end justify-between text-sm">
+                      <p class="text-gray-500">Qty 1</p>
+
+                      <div class="flex">
+                        <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500">Remove</button>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+              <a href="store/cart">View Shoping Bag</a>
+            </div>
+          </div> -->
+        </a>
       </div>
     </div>
   </div>

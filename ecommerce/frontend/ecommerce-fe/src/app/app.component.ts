@@ -10,7 +10,7 @@ import { filter } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'Store';
-  
+
   constructor(private activatedRoute: ActivatedRoute, private router: Router) {
     // Subscribe to router events
     this.router.events
@@ -19,16 +19,11 @@ export class AppComponent {
         window.scrollTo(0, 0);
       });
   }
-
-  // isAdminPage(): boolean {
-  //   return this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'admin';
-  // }
-
-  isLoginPage(): boolean {    
+ 
+  isLoginPage(): boolean {
     return this.activatedRoute.snapshot.firstChild?.routeConfig?.path === 'auth';
   }
   is404Page(): boolean {
     return this.router.url.includes('/error');
   }
-  
 }

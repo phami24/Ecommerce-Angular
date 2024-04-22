@@ -1,3 +1,4 @@
+import { CartService } from './../../../store/Cart/cart.service';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,7 +10,10 @@ import { Router } from '@angular/router';
 export class ProductCardComponent {
   @Input() product: any;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private cartService: CartService
+  ) {
 
   }
   navigate() {
@@ -18,5 +22,11 @@ export class ProductCardComponent {
 
   getStars(num: number): any[] {
     return new Array(num);
+  }
+  handleAddToCart() {
+    const data = { productId: this.product.id };
+    this.cartService.addItemToCart(data);
+    this.cartService.getCart();
+    this.router.navigate(['/store/cart']);
   }
 }

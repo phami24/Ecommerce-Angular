@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import phamiz.ecommerce.backend.exception.CartItemException;
 import phamiz.ecommerce.backend.exception.OrderException;
 import phamiz.ecommerce.backend.exception.UserException;
 import phamiz.ecommerce.backend.model.Address;
@@ -25,7 +26,7 @@ public class OrderController {
     @PostMapping("/")
     public ResponseEntity<Order> createOrder(
             @RequestBody Address shippingAddress,
-            @RequestHeader("Authorization") String jwt) throws UserException {
+            @RequestHeader("Authorization") String jwt) throws UserException, CartItemException {
         User user = userService.findUserProfileByJwt(jwt);
         Order order = orderService.createOrder(user, shippingAddress);
         return new ResponseEntity<>(order, HttpStatus.CREATED);

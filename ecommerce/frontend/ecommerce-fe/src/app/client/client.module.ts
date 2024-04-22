@@ -34,6 +34,8 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { ProductReviewRatingComponent } from './feature/product-detail/product-review-rating/product-review-rating.component';
+import {MatBadgeModule} from '@angular/material/badge';
+import { CartItemComponent } from './feature/cart/cart-item/cart-item.component';
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   declarations: [
@@ -56,6 +58,7 @@ import { ProductReviewRatingComponent } from './feature/product-detail/product-r
     ServiceComponent,
     BrandComponent,
     ProductReviewRatingComponent,
+    CartItemComponent,
   ],
   imports: [
     CommonModule,
@@ -73,7 +76,8 @@ import { ProductReviewRatingComponent } from './feature/product-detail/product-r
     MatProgressBarModule,
     MatSliderModule,
     MatChipsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatBadgeModule
   ],
   exports: [HeaderComponent, FooterComponent]
 })

@@ -27,10 +27,16 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required]],
-    });
+    // Nếu đã đăng nhập, tự động chuyển hướng đến trang home
+    if (this.isLoggedIn()) {
+      this.router.navigate(['/store/home']); // Chuyển hướng đến trang home
+    } else {
+
+      this.loginForm = this.fb.group({
+        email: ['', [Validators.required, Validators.email]],
+        password: ['', [Validators.required]],
+      });
+    }
   }
 
   submit() {
@@ -60,6 +66,13 @@ export class LoginComponent implements OnInit {
 
   togglePasswordVisibility(): void {
     this.showPassword = !this.showPassword;
+  }
+  isLoggedIn(): boolean {
+    const token = localStorage.getItem("userToken");
+    if (token) {
+      return true;
+    }
+    return false; // Giả sử mặc định là chưa đăng nhập
   }
 }
 
